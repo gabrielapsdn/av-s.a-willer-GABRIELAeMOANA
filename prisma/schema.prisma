@@ -1,0 +1,23 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Equipe {
+  id              Int             @id @default(autoincrement())
+  nome            String
+  especialidade   String
+  desenvolvedores Desenvolvedor[]
+}
+
+model Desenvolvedor {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  nivel    String
+  equipeId Int
+  equipe   Equipe @relation(fields: [equipeId], references: [id], onDelete: Cascade)
+}
